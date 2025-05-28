@@ -112,7 +112,7 @@ public class Scene {
                         new Vector4(v_b_1, v_b_2, v_b_3),
                         new Vector4(v_c_1, v_c_2, v_c_3),
                         c, m);
-                t.setCenter(new Vector4(200.0,0,-850.0));
+                t.setCenter(new Vector4(-100.0, 19, 100.0));
                 Scene.io.add(t);
                 System.out.println("Triangle object was added to the scene");
                 // System.out.println("TriangleObject: ");
