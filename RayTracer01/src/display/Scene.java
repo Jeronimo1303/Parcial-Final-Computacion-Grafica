@@ -6,15 +6,15 @@ import java.util.Scanner;
 
 import geometry.Camera;
 //import geometry.TriangleObject;
-import geometry.Vertex;
+//import geometry.Vertex;
 import math.Vector4;
 import geometry.IntersectableObject;
 //import geometry.Triangle;
 import geometry.Sphere;
+import geometry.Triangle;
 import geometry.Plane;
 import geometry.Ray;
 import geometry.Solution;
-import geometry.Triangle;
 
 public class Scene {
     public static ArrayList<Colour> colors = new ArrayList<>();
@@ -24,8 +24,7 @@ public class Scene {
     public static Camera camera = new Camera();
     // public static TriangleObject to;
     public static ArrayList<IntersectableObject> io = new ArrayList<>();
-    public static ArrayList<IntersectableObject> triangles = new ArrayList<>();
-    public static ArrayList<Vertex> vertices = new ArrayList<>();
+    public static ArrayList<IntersectableObject> to = new ArrayList<>();
     public static double centerX;
     public static double centerY;
     public static double centerZ;
@@ -39,8 +38,6 @@ public class Scene {
         for (IntersectableObject object : io) {
             object.setCamera();
         }
-        // Transform the triangleobject
-        // to.setCamera();
         // Transform the lights
         // for(Light light : lights) {
         // light.setCamera();
@@ -50,18 +47,18 @@ public class Scene {
     public static void readScene(String fileName) {
         try {
             Scanner in = new Scanner(new File(fileName));
-
-            // Number of vertices and vertices
-            int n = in.nextInt();
-            for (int i = 0; i < n; i++) {
-                double x = in.nextDouble();
-                double y = in.nextDouble();
-                double z = in.nextDouble();
-                vertices.add(new Vertex(new Vector4(x, y, z)));
-            }
-
+            /*
+             * // Number of vertices and vertices
+             * int n = in.nextInt();
+             * for (int i = 0; i < n; i++) {
+             * double x = in.nextDouble();
+             * double y = in.nextDouble();
+             * double z = in.nextDouble();
+             * vertices.add(new Vertex(new Vector4(x, y, z)));
+             * }
+             */
             // read the number of colors and then the colors
-            n = in.nextInt();
+            int n = in.nextInt();
             for (int i = 0; i < n; i++) {
                 double r = in.nextDouble();
                 double g = in.nextDouble();
@@ -93,13 +90,23 @@ public class Scene {
             // materia indices
             n = in.nextInt();
             for (int i = 0; i < n; i++) {
-                int v1 = in.nextInt();
-                int v2 = in.nextInt();
-                int v3 = in.nextInt();
+                int v_a_1 = in.nextInt();
+                int v_a_2 = in.nextInt();
+                int v_a_3 = in.nextInt();
+                int v_b_1 = in.nextInt();
+                int v_b_2 = in.nextInt();
+                int v_b_3 = in.nextInt();
+                int v_c_1 = in.nextInt();
+                int v_c_2 = in.nextInt();
+                int v_c_3 = in.nextInt();
                 int c = in.nextInt();
                 int m = in.nextInt();
-                Triangle t = new Triangle(v1, v2, v3, c, m);
-                triangles.add(t);
+                Triangle t = new Triangle(
+                        new Vector4(v_a_1, v_a_2, v_a_3),
+                        new Vector4(v_b_1, v_b_2, v_b_3),
+                        new Vector4(v_c_1, v_c_2, v_c_3),
+                        c, m);
+                Scene.io.add(t);
                 // System.out.println("TriangleObject: ");
                 // t.print(vertices);
             }
@@ -165,9 +172,10 @@ public class Scene {
                     // the camera is at the origin and looking at the
                     // negative z axis
                     // Keep the solution with the smallest z value
-                    if (s.intersectionPoint.vector[2] > solution.intersectionPoint.vector[2]) {
+                    if (s.t < solution.t) {
                         solution = s;
                     }
+
                 }
             }
         }
