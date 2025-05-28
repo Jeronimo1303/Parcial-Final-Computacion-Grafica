@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import geometry.Camera;
 //import geometry.TriangleObject;
-//import geometry.Vertex;
+import geometry.Vertex;
 import math.Vector4;
 import geometry.IntersectableObject;
 //import geometry.Triangle;
@@ -14,6 +14,7 @@ import geometry.Sphere;
 import geometry.Plane;
 import geometry.Ray;
 import geometry.Solution;
+import geometry.Triangle;
 
 public class Scene {
     public static ArrayList<Colour> colors = new ArrayList<>();
@@ -23,6 +24,8 @@ public class Scene {
     public static Camera camera = new Camera();
     // public static TriangleObject to;
     public static ArrayList<IntersectableObject> io = new ArrayList<>();
+    public static ArrayList<IntersectableObject> triangles = new ArrayList<>();
+    public static ArrayList<Vertex> vertices = new ArrayList<>();
     public static double centerX;
     public static double centerY;
     public static double centerZ;
@@ -47,18 +50,18 @@ public class Scene {
     public static void readScene(String fileName) {
         try {
             Scanner in = new Scanner(new File(fileName));
-            /*
-             * // Number of vertices and vertices
-             * int n = in.nextInt();
-             * for (int i = 0; i < n; i++) {
-             * double x = in.nextDouble();
-             * double y = in.nextDouble();
-             * double z = in.nextDouble();
-             * vertices.add(new Vertex(new Vector4(x, y, z)));
-             * }
-             */
-            // read the number of colors and then the colors
+
+            // Number of vertices and vertices
             int n = in.nextInt();
+            for (int i = 0; i < n; i++) {
+                double x = in.nextDouble();
+                double y = in.nextDouble();
+                double z = in.nextDouble();
+                vertices.add(new Vertex(new Vector4(x, y, z)));
+            }
+
+            // read the number of colors and then the colors
+            n = in.nextInt();
             for (int i = 0; i < n; i++) {
                 double r = in.nextDouble();
                 double g = in.nextDouble();
@@ -88,20 +91,18 @@ public class Scene {
 
             // read the number of triangles, vertices indices, color indices and
             // materia indices
-            /*
-             * n = in.nextInt();
-             * for (int i = 0; i < n; i++) {
-             * int v1 = in.nextInt();
-             * int v2 = in.nextInt();
-             * int v3 = in.nextInt();
-             * int c = in.nextInt();
-             * int m = in.nextInt();
-             * Triangle t = new Triangle(v1, v2, v3, c, m, canvas);
-             * triangles.add(t);
-             * // System.out.println("TriangleObject: ");
-             * //t.print(vertices);
-             * }
-             */
+            n = in.nextInt();
+            for (int i = 0; i < n; i++) {
+                int v1 = in.nextInt();
+                int v2 = in.nextInt();
+                int v3 = in.nextInt();
+                int c = in.nextInt();
+                int m = in.nextInt();
+                Triangle t = new Triangle(v1, v2, v3, c, m);
+                triangles.add(t);
+                // System.out.println("TriangleObject: ");
+                // t.print(vertices);
+            }
             // read the number of spheres and then the spheres:
             // center, radious, color index, material index
             n = in.nextInt();
@@ -192,8 +193,8 @@ public class Scene {
         Solution solution = null;
         for (IntersectableObject object : io) {
             Solution s = object.intersect(ray);
-            if(s != null && s.t > 0.0001) {
-                if(s.t < minT) {
+            if (s != null && s.t > 0.0001) {
+                if (s.t < minT) {
                     minT = s.t;
                     solution = s;
                 }
@@ -205,7 +206,7 @@ public class Scene {
     public static void drawScene() {
         // Trhow rays for each pixel
         Ray ray;
-        Vector4 origin = new Vector4(0, 0, 0);  // Camera is at the origin
+        Vector4 origin = new Vector4(0, 0, 0); // Camera is at the origin
         for (int x = -MainGUI.WIDTH2; x < MainGUI.WIDTH2; x++) {
             for (int y = -MainGUI.HEIGHT2; y < MainGUI.HEIGHT2; y++) {
                 // Create the ray
