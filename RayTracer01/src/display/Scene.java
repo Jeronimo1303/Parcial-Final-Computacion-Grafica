@@ -172,10 +172,9 @@ public class Scene {
                     // the camera is at the origin and looking at the
                     // negative z axis
                     // Keep the solution with the smallest z value
-                    if (s.t < solution.t) {
+                    if (s.intersectionPoint.vector[2] > solution.intersectionPoint.vector[2]) {
                         solution = s;
                     }
-
                 }
             }
         }
