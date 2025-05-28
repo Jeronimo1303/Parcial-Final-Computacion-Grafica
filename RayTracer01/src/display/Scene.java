@@ -46,7 +46,9 @@ public class Scene {
 
     public static void readScene(String fileName) {
         try {
+            System.out.println("_".repeat(50));
             Scanner in = new Scanner(new File(fileName));
+            System.out.println("File obtained, reading process will start...");
             /*
              * // Number of vertices and vertices
              * int n = in.nextInt();
@@ -59,6 +61,7 @@ public class Scene {
              */
             // read the number of colors and then the colors
             int n = in.nextInt();
+            System.out.println("Reading the number of colors");
             for (int i = 0; i < n; i++) {
                 double r = in.nextDouble();
                 double g = in.nextDouble();
@@ -67,6 +70,7 @@ public class Scene {
             }
             // read the number of materials and then the materials
             n = in.nextInt();
+            System.out.println("Reading the number of materials");
             for (int i = 0; i < n; i++) {
                 double kA = in.nextDouble();
                 double kD = in.nextDouble();
@@ -77,6 +81,7 @@ public class Scene {
             // read the color index of the ambient light
             Scene.ambientLight = in.nextInt();
             // read the number of lights and then the lights
+            System.out.println("Reading the number of lights and then the lights");
             n = in.nextInt();
             for (int i = 0; i < n; i++) {
                 double x = in.nextDouble();
@@ -88,6 +93,7 @@ public class Scene {
 
             // read the number of triangles, vertices indices, color indices and
             // materia indices
+            System.out.println("Reading the number fo triangles");
             n = in.nextInt();
             for (int i = 0; i < n; i++) {
                 int v_a_1 = in.nextInt();
@@ -106,7 +112,9 @@ public class Scene {
                         new Vector4(v_b_1, v_b_2, v_b_3),
                         new Vector4(v_c_1, v_c_2, v_c_3),
                         c, m);
+                t.setCenter(new Vector4(200.0,0,-850.0));
                 Scene.io.add(t);
+                System.out.println("Triangle object was added to the scene");
                 // System.out.println("TriangleObject: ");
                 // t.print(vertices);
             }
@@ -151,7 +159,7 @@ public class Scene {
             Scene.projectionDistance = in.nextInt();
             in.close();
         } catch (Exception e) {
-            System.out.println("Error reading file");
+            System.out.println("Error reading file: " + e);
         }
 
     }

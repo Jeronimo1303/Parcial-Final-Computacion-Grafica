@@ -73,6 +73,7 @@ public class Sphere implements IntersectableObject {
     public void setCamera() {
         UVN4x4 uvn = Scene.camera.uvn;
         transformedCenter = Matrix4x4.times(uvn, center);
+        System.out.println("Center of the Sphere: " + transformedCenter);
         //transformedCenter.normalizeW();
     }
 

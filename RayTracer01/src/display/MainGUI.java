@@ -26,7 +26,7 @@ public class MainGUI extends JPanel implements KeyListener {
         setFocusable(true);
         requestFocusInWindow();
         addKeyListener(this);
-  
+
     }
 
     public void paintComponent(Graphics g) {
@@ -147,7 +147,7 @@ public class MainGUI extends JPanel implements KeyListener {
         // create a frame and add the panel to it
         JFrame frame = new JFrame("Ray Tracer 01");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Scene.readScene("escena.txt");
+        Scene.readScene("C:/Users/Usuario/Desktop/Computación Gráfica/Entrega Final/Parcial-Final-Computacion-Grafica/RayTracer01/src/escena.txt");
         MainGUI mainGUI = new MainGUI();
         frame.add(mainGUI);
         frame.setSize(WIDTH, HEIGHT);
