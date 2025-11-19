@@ -90,10 +90,10 @@ De forma resumida, la arquitectura se compone de las siguientes etapas:
    - Consultas interactivas (ejemplo: Athena) sobre los datos en S3.
    - API (API Gateway + Lambda) para exponer resultados a aplicaciones externas.
 
+### 2.4 Mejores prácticas utilizadas
 
-### 2.4 Patrones
-
-### 2.5 Mejores prácticas utilizadas
+En vez de realizar las consultas una a una, se empleó un AWS EMR cluster para el procesamiento de los datasets. Esto se logró con la ayuda de Hadoop Spark, el cual se usó a través de un SDK y la API PySpark.
+Los archivos se almacenaron en S3, asegurando consistencia de datos, y las consultas se realizaron a través de AWS Glue, lo cual automatizó la visualización de los datos. 
 
 ## 3. Descripción del ambiente de desarrollo y técnico
 
@@ -108,11 +108,6 @@ El codigo no tiene dependencias externas, pero si import
 - requests
 - os
 - pyspark
-
-
-### 3.3 Paquetes
-
-<!-- Con números de versiones -->
 
 ### 3.4 Adicionales
 
